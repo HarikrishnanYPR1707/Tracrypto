@@ -35,7 +35,8 @@ Start the server
 
 ## Tech Stack
 
-- Light/dark mode toggle
-- Live previews
-- Fullscreen mode
-- Cross platform
+- Vite
+- React
+- MaterialUI
+- Chart.js
+- Netlify
