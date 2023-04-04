@@ -1,4 +1,9 @@
-import { Container, ThemeProvider, createTheme } from "@mui/material";
+import {
+  Container,
+  ThemeProvider,
+  Typography,
+  createTheme,
+} from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { CryptoState } from "../CryptoContext";
@@ -45,7 +50,14 @@ const CoinsTable = () => {
         style={{
           textAlign: "center",
         }}
-      ></Container>
+      >
+        <Typography
+          variant="h4"
+          style={{ margin: 18, fontFamily: "Montserrat" }}
+        >
+          Cryptocurrency Price by Market Cap
+        </Typography>
+      </Container>
     </ThemeProvider>
   );
 };
