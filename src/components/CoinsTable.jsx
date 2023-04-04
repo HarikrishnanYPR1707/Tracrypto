@@ -7,7 +7,9 @@ const CoinsTable = () => {
   const [loading, setLoading] = useState(false);
 
   const fetchCoins = async () => {
+    setLoading(true);
     const { data } = await axios.get(CoinList);
+    setLoading(false);
   };
 
   return <div>Coins Table</div>;
