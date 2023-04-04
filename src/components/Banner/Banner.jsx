@@ -1,6 +1,6 @@
-import { css } from "@emotion/react";
 import { Container, Typography } from "@mui/material";
 import React from "react";
+import Carousel from "./Carousel";
 
 const Banner = () => {
   return (
@@ -51,6 +51,7 @@ const Banner = () => {
             Get all the Info regarding favorite Crypto Currency
           </Typography>
         </div>
+        <Carousel />
       </Container>
     </div>
   );
