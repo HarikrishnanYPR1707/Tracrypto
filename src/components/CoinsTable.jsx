@@ -23,6 +23,11 @@ const CoinsTable = () => {
     setLoading(false);
   };
 
+  // Calling the function when this component is rendered
+  useEffect(() => {
+    fetchCoins();
+  }, [currency]);
+
   return <div>Coins Table</div>;
 };
 
