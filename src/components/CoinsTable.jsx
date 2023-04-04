@@ -1,5 +1,11 @@
 import {
   Container,
+  LinearProgress,
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   TextField,
   ThemeProvider,
   Typography,
@@ -16,6 +22,9 @@ const CoinsTable = () => {
 
   // State for loading
   const [loading, setLoading] = useState(false);
+
+  // State for searching
+  const [search, setSearch] = useState();
 
   // Destructuring the currency from CryptoContext
   const { currency } = CryptoState();
@@ -67,7 +76,34 @@ const CoinsTable = () => {
             marginBottom: 20,
             width: "100%",
           }}
-        ></TextField>
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        {/* Adding table section */}
+        <TableContainer>
+          {loading ? (
+            <LinearProgress style={{ backgroundColor: "gold" }} />
+          ) : (
+            <Table>
+              <TableHead style={{ backgroundColor: "#EEBC1D" }}>
+                <TableRow>
+                  {["Coin", "Price", "24h Change", "Market Cap"].map((head) => (
+                    <TableCell
+                      style={{
+                        color: "Black",
+                        fontWeight: "700",
+                        fontFamily: "Montserrat",
+                      }}
+                      key={head}
+                      align={head === "Coin" ? "" : "right"}
+                    >
+                      {head}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+            </Table>
+          )}
+        </TableContainer>
       </Container>
     </ThemeProvider>
   );
