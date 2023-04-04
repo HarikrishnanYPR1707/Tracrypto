@@ -1,10 +1,15 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { TrendingCoins } from "../../config/api";
 
 const Carousel = () => {
+  // State for managing trending coins
+  const [trending, setTrending] = useState([]);
+
+  // Taking the context of the the currency
   const { currency, setCurrency } = CryptoState();
 
+  // function for fetching trending coins
   const fetchTrendingCoins = async () => {
     const { data } = await axios.get(TrendingCoins(currency));
   };
