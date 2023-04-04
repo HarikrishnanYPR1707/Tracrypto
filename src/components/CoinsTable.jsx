@@ -1,3 +1,4 @@
+import { Container, ThemeProvider, createTheme } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { CryptoState } from "../CryptoContext";
@@ -30,7 +31,23 @@ const CoinsTable = () => {
     fetchCoins();
   }, [currency]);
 
-  return <div>Coins Table</div>;
+  // DarkTheme using themeProvider
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
+  return (
+    // using themeProvider for dark theme
+    <ThemeProvider theme={darkTheme}>
+      <Container
+        style={{
+          textAlign: "center",
+        }}
+      ></Container>
+    </ThemeProvider>
+  );
 };
 
 export default CoinsTable;
