@@ -2,6 +2,7 @@ import {
   Container,
   LinearProgress,
   Table,
+  TableBody,
   TableCell,
   TableContainer,
   TableHead,
@@ -13,10 +14,14 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CryptoState } from "../CryptoContext";
 import { CoinList } from "../config/api";
 
 const CoinsTable = () => {
+  // Creating a variable for navigation
+  const history = useNavigate();
+
   // State for coins
   const [coins, setCoins] = useState([]);
 
@@ -53,6 +58,15 @@ const CoinsTable = () => {
     },
   });
 
+  // Adding a function for handling search
+  const handleSearch = () => {
+    return coins.filter(
+      (coin) =>
+        coin.name.toLowerCase().includes(search) ||
+        coin.symbol.toLowerCase().includes(search)
+    );
+  };
+
   return (
     // using themeProvider for dark theme
     <ThemeProvider theme={darkTheme}>
@@ -83,8 +97,11 @@ const CoinsTable = () => {
           {loading ? (
             <LinearProgress style={{ backgroundColor: "gold" }} />
           ) : (
+            // Adding a table
             <Table>
+              {/* Adding a table head */}
               <TableHead style={{ backgroundColor: "#EEBC1D" }}>
+                {/* Adding a header row */}
                 <TableRow>
                   {["Coin", "Price", "24h Change", "Market Cap"].map((head) => (
                     <TableCell
@@ -94,13 +111,45 @@ const CoinsTable = () => {
                         fontFamily: "Montserrat",
                       }}
                       key={head}
-                      align={head === "Coin" ? "" : "right"}
+                      align={head === "Coin" ? "left" : "right"}
                     >
                       {head}
                     </TableCell>
                   ))}
                 </TableRow>
               </TableHead>
+              {/* Adding table body */}
+              <TableBody>
+                {handleSearch().map((row) => {
+                  const profit = row.price_change_percentage_24h > 0;
+
+                  return (
+                    <TableRow
+                      onClick={() => history(`/coins/${row.id}`)}
+                      style={{}}
+                      key={row.name}
+                    >
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        style={{
+                          display: "flex",
+                          gap: 15,
+                        }}
+                      >
+                        <img
+                          src={row?.image}
+                          alt={row.name}
+                          height="50"
+                          style={{
+                            marginBottom: 10,
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
             </Table>
           )}
         </TableContainer>
