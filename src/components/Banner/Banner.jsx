@@ -51,6 +51,7 @@ const Banner = () => {
             Get all the Info regarding favorite Crypto Currency
           </Typography>
         </div>
+        {/* Carousel section  */}
         <Carousel />
       </Container>
     </div>
