@@ -1,7 +1,5 @@
-import { css } from "@emotion/react";
-import { makeStyles } from "@mui/styles";
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import Coinpage from "./pages/Coinpage";
@@ -10,7 +8,13 @@ import Homepage from "./pages/Homepage";
 const App = () => {
   return (
     <Router>
-      <div className="app">
+      <div
+        style={{
+          backgroundColor: "#14161a",
+          color: "#fff",
+          minHeight: "100vh",
+        }}
+      >
         <Header />
         <Routes>
           <Route path="/" Component={Homepage} exact />
