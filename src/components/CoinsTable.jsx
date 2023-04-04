@@ -1,5 +1,6 @@
 import {
   Container,
+  TextField,
   ThemeProvider,
   Typography,
   createTheme,
@@ -51,12 +52,22 @@ const CoinsTable = () => {
           textAlign: "center",
         }}
       >
+        {/* Header for coinsTable */}
         <Typography
           variant="h4"
           style={{ margin: 18, fontFamily: "Montserrat" }}
         >
           Cryptocurrency Price by Market Cap
         </Typography>
+        {/* Adding serach field */}
+        <TextField
+          label="Search for a Crypto Currency.."
+          variant="outlined"
+          style={{
+            marginBottom: 20,
+            width: "100%",
+          }}
+        ></TextField>
       </Container>
     </ThemeProvider>
   );
