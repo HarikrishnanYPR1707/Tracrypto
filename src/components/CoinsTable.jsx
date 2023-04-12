@@ -1,6 +1,7 @@
 import {
 	Container,
 	LinearProgress,
+	Pagination,
 	Table,
 	TableBody,
 	TableCell,
@@ -18,6 +19,10 @@ import { useNavigate } from "react-router-dom";
 import { CryptoState } from "../CryptoContext";
 import { CoinList } from "../config/api";
 
+export function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const CoinsTable = () => {
 	// Creating a variable for navigation
 	const history = useNavigate();
@@ -32,7 +37,10 @@ const CoinsTable = () => {
 	const [search, setSearch] = useState();
 
 	// Destructuring the currency from CryptoContext
-	const { currency } = CryptoState();
+	const { currency, symbol } = CryptoState();
+
+	// Creating state for pagination
+	const [page, setPage] = useState(1);
 
 	// Creating a functoin for fetching the list of coins
 	const fetchCoins = async () => {
@@ -43,8 +51,6 @@ const CoinsTable = () => {
 		setCoins(data);
 		setLoading(false);
 	};
-
-	console.log(coins);
 
 	// Calling the function when this component is rendered
 	useEffect(() => {
@@ -129,69 +135,130 @@ const CoinsTable = () => {
 							</TableHead>
 							{/* Adding table body */}
 							<TableBody>
-								{handleSearch().map((row) => {
-									const profit =
-										row.price_change_percentage_24h > 0;
+								{handleSearch()
+									.slice(
+										(page - 1) * 10,
+										(page - 1) * 10 + 10
+									)
+									.map((row) => {
+										const profit =
+											row.price_change_percentage_24h > 0;
 
-									return (
-										<TableRow
-											onClick={() =>
-												history(`/coins/${row.id}`)
-											}
-											style={{}}
-											key={row.name}
-										>
-											<TableCell
-												component="th"
-												scope="row"
+										return (
+											<TableRow
+												onClick={() =>
+													history(`/coins/${row.id}`)
+												}
 												style={{
-													display: "flex",
-													gap: 15,
+													backgroundColor: "#16171a",
+													cursor: "pointer",
+													"&:hover": {
+														backgroundColor:
+															"#131111",
+													},
+													fontFamily: "Montserrat",
 												}}
+												key={row.name}
 											>
-												{/* Image of the crypto which is in that row/cell */}
-												<img
-													src={row?.image}
-													alt={row.name}
-													height="50"
-													style={{
-														marginBottom: 10,
-													}}
-												/>
-												{/* Adding symbol and name of the crypto */}
-												<div
+												<TableCell
+													component="th"
+													scope="row"
 													style={{
 														display: "flex",
-														flexDirection: "column",
+														gap: 15,
 													}}
 												>
-													{/* Adding symbol of the crypto of the a particular cell */}
-													<span
+													{/* Image of the crypto which is in that row/cell */}
+													<img
+														src={row?.image}
+														alt={row.name}
+														height="50"
 														style={{
-															textTransform:
-																"uppercase",
-															fontSize: 22,
+															marginBottom: 10,
+														}}
+													/>
+													{/* Adding symbol and name of the crypto */}
+													<div
+														style={{
+															display: "flex",
+															flexDirection:
+																"column",
 														}}
 													>
-														{row.symbol}
-													</span>
-													{/* Adding name of the crypto of the a particular cell */}
-													<span
-														style={{
-															color: "darkgray",
-														}}
-													>
-														{row.name}
-													</span>
-												</div>
-											</TableCell>
-										</TableRow>
-									);
-								})}
+														{/* Adding symbol of the crypto of the a particular cell */}
+														<span
+															style={{
+																textTransform:
+																	"uppercase",
+																fontSize: 22,
+															}}
+														>
+															{row.symbol}
+														</span>
+														{/* Adding name of the crypto of the a particular cell */}
+														<span
+															style={{
+																color: "darkgray",
+															}}
+														>
+															{row.name}
+														</span>
+													</div>
+												</TableCell>
+												{/* Adding a table cell for price of the crypto */}
+												<TableCell align="right">
+													{symbol}{" "}
+													{numberWithCommas(
+														row.current_price.toFixed(
+															2
+														)
+													)}
+												</TableCell>
+												<TableCell
+													align="right"
+													style={{
+														color:
+															profit > 0
+																? "rgb(14, 203, 129)"
+																: "red",
+														fontWeight: 500,
+													}}
+												>
+													{profit && "+"}
+													{row.price_change_percentage_24h.toFixed(
+														2
+													)}
+													%
+												</TableCell>
+												<TableCell align="right">
+													{symbol}{" "}
+													{numberWithCommas(
+														row.market_cap
+															.toString()
+															.slice(0, -6)
+													)}
+													M
+												</TableCell>
+											</TableRow>
+										);
+									})}
 							</TableBody>
 						</Table>
 					)}
 				</TableContainer>
+				<Pagination
+					count={(handleSearch()?.length / 10).toFixed(0)}
+					style={{
+						padding: 20,
+						width: "100%",
+						display: "flex",
+						justifyContent: "center",
+					}}
+					onChange={(_, value) => {
+						setPage(value);
+						window.scroll(0, 450);
+					}}
+				/>
 			</Container>
 		</ThemeProvider>
 	);
