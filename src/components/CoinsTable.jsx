@@ -34,7 +34,7 @@ const CoinsTable = () => {
 	const [loading, setLoading] = useState(false);
 
 	// State for searching
-	const [search, setSearch] = useState();
+	const [search, setSearch] = useState("");
 
 	// Destructuring the currency from CryptoContext
 	const { currency, symbol } = CryptoState();
