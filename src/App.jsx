@@ -5,23 +5,23 @@ import Coinpage from "./pages/Coinpage";
 import Homepage from "./pages/Homepage";
 
 const App = () => {
-  return (
-    <Router>
-      <div
-        style={{
-          backgroundColor: "#14161a",
-          color: "#fff",
-          minHeight: "100vh",
-        }}
-      >
-        <Header />
-        <Routes>
-          <Route path="/" Component={Homepage} exact />
-          <Route path="/coins/:id" Component={Coinpage} />
-        </Routes>
-      </div>
-    </Router>
-  );
+	return (
+		<Router>
+			<div
+				style={{
+					backgroundColor: "#14161a",
+					color: "#fff",
+					minHeight: "100vh",
+				}}
+			>
+				<Header />
+				<Routes>
+					<Route path="/" Component={Homepage} exact />
+					<Route path="/coins/:id" Component={Coinpage} />
+				</Routes>
+			</div>
+		</Router>
+	);
 };
 
 export default App;
