@@ -1,6 +1,7 @@
 import { LinearProgress, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
 import { CryptoState } from "../CryptoContext";
 import CoinInfo from "../components/CoinInfo";
@@ -77,13 +78,14 @@ const Coinpage = () => {
 					style={{
 						width: "100%",
 						fontFamily: "Montserrat",
+						color: "lightgray",
 						padding: 25,
 						paddingBottom: 15,
 						paddingTop: 0,
 						textAlign: "justify",
 					}}
 				>
-					{coin?.description.en.split(". ")[0]}.
+					{ReactHtmlParser(coin?.description.en.split(". ")[0])}.
 				</Typography>
 				<div style={{}}>
 					{/* for rank of the crypto */}
